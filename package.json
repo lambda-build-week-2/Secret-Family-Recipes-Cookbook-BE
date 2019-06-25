@@ -2,10 +2,15 @@
   "name": "secret-family-recipes-cookbook-be",
   "version": "1.0.0",
   "description": "A Food Recipe Application",
-  "main": "server/app.js",
+  "main": "app.js",
   "scripts": {
     "start": "node ./dist/app.js",
-    "start:dev": "nodemon ./server/app.js --exec babel-node",
+    "start:dev": "nodemon ./app.js --exec babel-node",
+    "build": "npm run clean && babel ./ -d ./dist",
+    "migrate": "sequelize db:migrate",
+    "migrate:undo:all": "sequelize db:migrate:undo:all",
+    "migrate:undo": "sequelize db:migrate:undo",
+    "refreshdb": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,12 +28,15 @@
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^7.11.0",
     "sequelize": "^5.8.12",
-    "sequelize-cli": "^5.5.0"
+    "sequelize-cli": "^5.5.0",
+    "validator": "^11.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
