@@ -1,6 +1,6 @@
 import HashPassword from '../helpers/hashPassword';
 import userModel from '../model/user';
-import Response from '../helpers/response';
+import Response from '../helpers/resp';
 import Token from '../helpers/token';
 
 class UserController {

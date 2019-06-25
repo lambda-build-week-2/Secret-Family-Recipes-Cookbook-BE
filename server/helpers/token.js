@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Response from './response';
+import Response from './resp';
 
 const secret = process.env.SECRET_KEY || 'ERRORKEY';
 

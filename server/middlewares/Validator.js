@@ -1,5 +1,5 @@
 import validator from 'validator';
-import Response from '../helpers/Response';
+import Response from '../helpers/resp';
 
 class Validator {
   static validateSignUp(req, res, next) {
