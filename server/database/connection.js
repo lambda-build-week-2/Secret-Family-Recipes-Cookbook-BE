@@ -38,6 +38,6 @@ const createTables = async (dev) => {
   }
   return true;
 };
-(await createTables(process.env.NODE_ENV))();
+createTables(process.env.NODE_ENV);
 
 export default db;
