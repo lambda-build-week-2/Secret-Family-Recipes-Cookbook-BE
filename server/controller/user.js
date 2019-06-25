@@ -21,6 +21,8 @@ class UserController {
       console.log(data);
       if (data) return Response.error(res, 400, 'Email exists already! try another!');
       const payload = await userModel.create(userObject);
+      console.log('------------payload----------')
+      console.log(payload);
       if (payload) {
         const payloadObject = {
           userId: payload.userid,

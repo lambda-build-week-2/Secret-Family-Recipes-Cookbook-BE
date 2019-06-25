@@ -41,6 +41,7 @@ const createTables = async (dev) => {
   }
   return true;
 };
-createTables(process.env.NODE_ENV);
+
+createTables().then(x => console.log('Working'));
 
 export default db;
