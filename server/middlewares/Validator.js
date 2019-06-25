@@ -20,6 +20,18 @@ class Validator {
     }
     return next();
   }
+
+  static validateSignin(req, res, next) {
+    const { email, password } = req.body;
+    if (typeof email === 'undefined' || !validator.isEmail(email.trim())) {
+      return Response.error(res, 400, 'Enter a valid email address');
+    }
+    if (typeof password !== 'string' || password.trim().length < 6) {
+      return Response.error(res, 400, 'Enter a valid password! password must be greater than 6 characters.');
+    }
+
+    return next();
+  }
 }
 
 export default Validator;
