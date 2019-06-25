@@ -17,12 +17,8 @@ class UserController {
         lastname,
       };
       const data = await userModel.findUser(email);
-      console.log('------------data----------')
-      console.log(data);
       if (data) return Response.error(res, 400, 'Email exists already! try another!');
       const payload = await userModel.create(userObject);
-      console.log('------------payload----------')
-      console.log(payload);
       if (payload) {
         const payloadObject = {
           userId: payload.userid,
@@ -38,11 +34,28 @@ class UserController {
         });
       }
     } catch (err) {
-      console.log('--------------error-----------------');
-      
-      console.log(err);
       return Response.error(res, 500, 'Internal server error!');
     }
+  }
+
+  static async signin(req, res) {
+    const { email, password } = req.body;
+    const data = await userModel.findUser(email);
+    if (!data) return Response.error(res, 400, 'invalid username or password');
+    const realPassword = await HashPassword.verify(password, data.password);
+    if (!realPassword) return Response.error(res, 400, 'invalid username or password');
+    const payload = {
+      userId: data.userid,
+      email: data.email
+    };
+    const token = await Token.createToken(payload);
+    payload.firstname = data.firstname;
+    payload.lastname = data.lastname;
+
+    return Response.success(res, 200, {
+      user: payload,
+      token
+    });
   }
 }
 
