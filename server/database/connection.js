@@ -1,4 +1,7 @@
 import { Pool } from 'pg';
+import { config } from 'dotenv';
+
+config();
 
 const testConfig = {
   database: process.env.DB_NAME_TEST,
@@ -38,6 +41,7 @@ const createTables = async (dev) => {
   }
   return true;
 };
-(await createTables(process.env.NODE_ENV))();
+
+createTables().then(x => console.log('Working'));
 
 export default db;
