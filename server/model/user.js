@@ -11,7 +11,7 @@ class User {
       const result = await db.query(userQuery, userObject);
       return result.rows[0];
     } catch (err) {
-      return err;
+      return false;
     }
   }
   static async findUser(email) {
@@ -20,7 +20,7 @@ class User {
       const result = await db.query(findQuery, [email]);
       return result.rows[0];
     } catch (err) {
-      return err;
+      return false;
     }
   }
 }

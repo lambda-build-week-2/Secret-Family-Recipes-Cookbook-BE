@@ -16,7 +16,6 @@ class UserController {
       lastname,
     };
     const data = await userModel.findUser(email);
-    console.log(data);
     if (data) return Response.error(res, 400, 'Email exists already! try another!');
     const payload = await userModel.create(userObject);
     if (payload) {
@@ -34,7 +33,6 @@ class UserController {
       });
     }
     return Response.error(res, 500, 'Internal server error!');
- 
   }
 }
 
