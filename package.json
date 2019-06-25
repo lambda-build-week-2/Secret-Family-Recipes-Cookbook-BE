@@ -4,7 +4,7 @@
   "description": "A Food Recipe Application",
   "main": "app.js",
   "scripts": {
-    "start": "node ./dist/app.js",
+    "start": "babel-node ./app.js",
     "start:dev": "nodemon ./app.js --exec babel-node",
     "build": "npm run clean && babel ./ -d ./dist",
     "migrate": "sequelize db:migrate",
