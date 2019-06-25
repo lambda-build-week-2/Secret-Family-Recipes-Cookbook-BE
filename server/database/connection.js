@@ -1,4 +1,7 @@
 import { Pool } from 'pg';
+import { config } from 'dotenv';
+
+config();
 
 const testConfig = {
   database: process.env.DB_NAME_TEST,
