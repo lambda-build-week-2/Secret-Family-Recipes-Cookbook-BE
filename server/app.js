@@ -1,11 +1,16 @@
 import express from 'express';
+import cors from 'cors';
 import apiRoute from './route';
 import bodyParser from 'body-parser';
-import cors from 'cors';
 
 
 const app = express();
 const port = process.env.PORT || 3002;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use('/api/v1/', apiRoute);
 
 app.get('/', (req, res) => {
   return res.status(200).json({
@@ -13,22 +18,6 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/api/v1/', apiRoute);
-app.use(
-  cors({
-    origin: '*',
-    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  }),
-);
-app.all('/*', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-  next();
-});
 app.listen(port, () => {
   console.log(`Server started and listening on port ${port}`);
 })
