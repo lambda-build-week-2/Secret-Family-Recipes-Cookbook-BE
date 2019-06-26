@@ -7,14 +7,14 @@ class UserController {
   static async signup(req, res) {
     try {
       const {
-        email, password, firstname, lastname
+        email, password, firstName, lastName
       } = req.body;
       const encryptedPassword = await HashPassword.create(password);
       const userObject = {
         email,
-        firstname,
+        firstName,
         password: encryptedPassword,
-        lastname,
+        lastName,
       };
       const data = await userModel.findUser(email);
       if (data) return Response.error(res, 400, 'Email exists already! try another!');
@@ -25,9 +25,9 @@ class UserController {
           email: payload.email,
         };
         const token = await Token.createToken(payloadObject);
-        payloadObject.firstname = payload.firstname;
-        payloadObject.lastname = payload.lastname;
-  
+        payloadObject.firstName = payload.firstName;
+        payloadObject.lastName = payload.lastName;
+
         return Response.success(res, 201, {
           user: payloadObject,
           token,
@@ -49,8 +49,8 @@ class UserController {
       email: data.email
     };
     const token = await Token.createToken(payload);
-    payload.firstname = data.firstname;
-    payload.lastname = data.lastname;
+    payload.firstName = data.firstName;
+    payload.lastName = data.lastName;
 
     return Response.success(res, 200, {
       user: payload,
