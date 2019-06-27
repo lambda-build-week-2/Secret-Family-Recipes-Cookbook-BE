@@ -44,6 +44,17 @@ class Recipe {
       return false;
     }
   }
+
+  static async delete(userId, recipeId) {
+    try {
+      const deleteQuery = `DELETE FROM recipes WHERE recipeid = $1 AND userid = $2 RETURNING *`
+      const values = [recipeId, userId];
+      const result = await db.query(deleteQuery, values);
+      return result.rows[0];
+    } catch (err) {
+      return false;
+    }
+  }
 }
 
 export default Recipe;
