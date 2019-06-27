@@ -10,11 +10,11 @@ class Token {
   }
 
   static async verifyToken(req, res, next) {
-    const { token } = req.headers;
-    if (typeof token === 'undefined') {
+    const { authorization } = req.headers;
+    if (typeof authorization === 'undefined') {
       return Response.error(res, 400, 'No token provided!');
     }
-    const verifiedToken = await jwt.verify(token, secret);
+    const verifiedToken = await jwt.verify(authorization, secret);
     if (!verifiedToken) {
       return Response.error(res, 401, 'Token cannot be verified');
     }

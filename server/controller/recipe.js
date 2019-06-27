@@ -37,6 +37,19 @@ class RecipeController {
     return Response.success(res, 200, updatedRecipe);
 
   }
+
+  static async deleteRecipe(req, res) {
+    const {userId} = req.decoded;
+    const { recipeId } = req.params;
+
+    const recipe = await recipeModel.getRecipeById(recipeId);
+    if (!recipe) return Response.error(res, 400, 'cannot find that recipe');
+    if (userId !== recipe.userid) return Response.error(res, 401, 'you cannot delete another user\'s recipe');
+
+    const recipeDeleted = await recipeModel.delete(userId, recipeId);
+    if(!recipeDeleted) return Response.error(res, 500, 'internal server error!');
+    return Response.success(res, 200, recipeDeleted);
+  }
 }
 
 export default RecipeController;
