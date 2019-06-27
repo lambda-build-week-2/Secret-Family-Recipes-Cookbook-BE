@@ -12,28 +12,36 @@ const testConfig = {
 };
 
 const createTableUsers = `CREATE TABLE IF NOT EXISTS users (
-  userId serial PRIMARY KEY,
+  userid serial PRIMARY KEY,
   email varchar(80) UNIQUE,
   password varchar(400),
   firstname varchar(50),
   lastname varchar(50), 
   timeRegistered TIMESTAMP NOT NULL DEFAULT NOW()
-  
   )`;
-const dropTables = 'DROP TABLE users';
+
+const createTableRecipe = `CREATE TABLE IF NOT EXISTS recipes (
+  recipeid serial PRIMARY KEY,
+  userid serial REFERENCES users(userid) ON DELETE CASCADE,
+  title varchar UNIQUE,
+  source varchar,
+  ingredients varchar,
+  category varchar
+)`
+const dropTables = 'DROP TABLE users; DROP TABLE users';
 
 const db = (process.env.NODE_ENV === 'test') ? new Pool(testConfig) : new Pool();
 const createTables = async (dev) => {
   if (dev === 'test') {
     try {
-      await db.query(`${dropTables}; ${createTableUsers};`);
+      await db.query(`${dropTables}; ${createTableUsers}; ${createTableRecipe}`);
       console.log(' Test table dropped and created!.');
     } catch (err) {
       return false;
     }
   } else {
     try {
-      await db.query(`${createTableUsers};`);
+      await db.query(`${createTableUsers}; ${createTableRecipe}`);
       console.log('Tables created!');
     } catch (err) {
       return false;

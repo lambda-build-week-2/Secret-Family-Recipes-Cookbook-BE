@@ -32,6 +32,13 @@ class Validator {
 
     return next();
   }
+
+  static validateRecipe(req, res, next) {
+    const {title, source, ingredients, category } = req.body;
+    if (!title || !source || !ingredients || !category) return Response.error(res, 400, 'Enter a "title", "source", "ingredients" and "category"');
+    
+    return next();
+  }
 }
 
 export default Validator;
