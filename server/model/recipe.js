@@ -1,7 +1,7 @@
 import db from '../database/connection';
-import { stat } from 'fs';
 
 class Recipe {
+
   static async create(params, userId) {
     try {
       const {title, source, ingredients, category } = params;
@@ -63,6 +63,18 @@ class Recipe {
       const result = await db.query(query);
       return result.rows;
     } catch (err) {
+      return false;
+    }
+  }
+
+  static async search(search) {
+    try {
+      const searchQuery = `SELECT * FROM recipes WHERE title = $1 OR category = $2`;
+      const values = [search, search];
+      const result = await db.query(searchQuery, values);
+      return result.rows;
+    }
+    catch(err) {
       return false;
     }
   }

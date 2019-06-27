@@ -56,6 +56,13 @@ class RecipeController {
     if (!recipes) return Response.error(res, 500, 'internal server error');
     return Response.success(res, 200, recipes);
   }
+
+  static async searchRecipe(req, res) {
+    const {search} = req.body;
+    const searchedRecipe = await recipeModel.search(search);
+    if (!searchedRecipe) return Response.error(res, 500, 'internal server error');
+    return Response.success(res, 200, searchedRecipe);
+  }
 }
 
 export default RecipeController;
