@@ -27,21 +27,20 @@ const createTableRecipe = `CREATE TABLE IF NOT EXISTS recipes (
   source varchar,
   ingredients varchar,
   category varchar
-)`
-const dropTables = 'DROP TABLE users; DROP TABLE users';
-
+)`;
+const dropTables = 'DROP TABLE IF EXISTS recipes; DROP TABLE IF EXISTS users;';
 const db = (process.env.NODE_ENV === 'test') ? new Pool(testConfig) : new Pool();
 const createTables = async (dev) => {
   if (dev === 'test') {
     try {
-      await db.query(`${dropTables}; ${createTableUsers}; ${createTableRecipe}`);
+      await db.query(`${dropTables}; ${createTableUsers}; ${createTableRecipe};`);
       console.log(' Test table dropped and created!.');
     } catch (err) {
       return false;
     }
   } else {
     try {
-      await db.query(`${createTableUsers}; ${createTableRecipe}`);
+      await db.query(`${createTableUsers}; ${createTableRecipe};`);
       console.log('Tables created!');
     } catch (err) {
       return false;
@@ -50,6 +49,6 @@ const createTables = async (dev) => {
   return true;
 };
 
-createTables(process.env.NODE_ENV).then(x => console.log('Working'));
+createTables(process.env.NODE_ENV).then(x => console.log('Working?', x));
 
 export default db;

@@ -6,5 +6,6 @@ import Validator from '../middlewares/Validator';
 const recipeRoute = Router();
 
 recipeRoute.post('/recipe', Validator.validateRecipe, Token.verifyToken, RecipeController.createRecipe);
+recipeRoute.put('/:recipeId/recipe', Token.verifyToken, RecipeController.modifyRecipe);
 
 export default recipeRoute;

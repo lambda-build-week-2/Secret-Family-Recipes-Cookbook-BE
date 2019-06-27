@@ -17,6 +17,26 @@ class RecipeController {
     if (!recipe) return Response.error(res, 500, 'internal server error');
     return Response.success(res, 201, recipe);
   }
+
+  static async modifyRecipe(req, res) {
+    const {title, source, ingredients, category } = req.body;
+    const {userId} = req.decoded;
+    const { recipeId } = req.params;
+
+    const recipe = await recipeModel.getRecipeById(recipeId);
+    if (!recipe) return Response.error(res, 400, 'cannot find that recipe');
+    if (userId !== recipe.userid) return Response.error(res, 401, 'you cannot modify another user\'s recipe');
+    const params = {
+      title: title || recipe.title,
+      source: source || recipe.source,
+      ingredients: ingredients || recipe.ingredients,
+      category: category || recipe.category
+    }
+    const updatedRecipe = await recipeModel.modify(params, userId);
+    if(!updatedRecipe) return Response.error(res, 500, 'internal server error!');
+    return Response.success(res, 200, updatedRecipe);
+
+  }
 }
 
 export default RecipeController;
