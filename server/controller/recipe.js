@@ -50,6 +50,12 @@ class RecipeController {
     if(!recipeDeleted) return Response.error(res, 500, 'internal server error!');
     return Response.success(res, 200, recipeDeleted);
   }
+
+  static async getAllRecipes(req, res) {
+    const recipes = await recipeModel.getAll();
+    if (!recipes) return Response.error(res, 500, 'internal server error');
+    return Response.success(res, 200, recipes);
+  }
 }
 
 export default RecipeController;
