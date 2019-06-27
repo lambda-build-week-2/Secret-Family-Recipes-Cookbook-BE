@@ -1,4 +1,5 @@
 import db from '../database/connection';
+import { stat } from 'fs';
 
 class Recipe {
   static async create(params, userId) {
@@ -51,6 +52,16 @@ class Recipe {
       const values = [recipeId, userId];
       const result = await db.query(deleteQuery, values);
       return result.rows[0];
+    } catch (err) {
+      return false;
+    }
+  }
+
+  static async getAll() {
+    try {
+      const query = 'SELECT * FROM recipes';
+      const result = await db.query(query);
+      return result.rows;
     } catch (err) {
       return false;
     }
