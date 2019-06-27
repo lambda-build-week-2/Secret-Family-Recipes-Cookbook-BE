@@ -9,5 +9,6 @@ recipeRoute.post('/recipe', Validator.validateRecipe, Token.verifyToken, RecipeC
 recipeRoute.put('/:recipeId/recipe', Token.verifyToken, RecipeController.modifyRecipe);
 recipeRoute.delete('/:recipeId/recipe', Token.verifyToken, RecipeController.deleteRecipe);
 recipeRoute.get('/recipes', RecipeController.getAllRecipes);
+recipeRoute.post('/recipes/search', Token.verifyToken, RecipeController.searchRecipe);
 
 export default recipeRoute;
